@@ -245,15 +245,16 @@
     .envelope-wrapper:hover .coin.c3 { animation: popCoin 1.2s ease-out 0.4s forwards; bottom: -10px; left: 20px; }
     @keyframes popCoin { 0% { opacity: 0; transform: scale(0) translateY(0); } 50% { opacity: 1; transform: scale(1.2) translateY(-20px); } 100% { opacity: 0; transform: scale(1) translateY(-40px); } }
 
-    /* ─── GIFT MODAL ─── */
-    .gift-modal { display: none; position: fixed; inset: 0; z-index: 5000; background: rgba(26,16,8,0.85); align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity 0.3s ease; }
+    /* ─── GIFT MODAL ─── */ 
+    /* I want scroll for the modal body */
+    .gift-modal { display: none;  position: fixed; inset: 0; z-index: 5000; background: rgba(26,16,8,0.85); align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity 0.3s ease; }
     .gift-modal.active { display: flex; opacity: 1; }
     .gift-modal-content { background: var(--ivory); width: 100%; max-width: 800px; border-radius: 12px; overflow: hidden; position: relative; transform: translateY(20px); transition: transform 0.3s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.4); border: 2px solid var(--gold-pale); }
     .gift-modal.active .gift-modal-content { transform: translateY(0); }
     .gift-modal-header { background: var(--brown); color: var(--gold-pale); text-align: center; padding: 1.5rem; font-family: var(--font-serif); font-size: 2rem; position: relative; border-bottom: 2px solid var(--gold-bright); }
     .gift-modal-close { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: none; color: rgba(255,255,255,0.7); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
     .gift-modal-close:hover { color: #fff; transform: scale(1.1); }
-    .gift-modal-body { padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .gift-modal-body { padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; overflow-y: auto; max-height: 70vh; }
     .qr-card { text-align: center; }
     .qr-card-title { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 600; color: var(--brown); margin-bottom: 1.5rem; }
     .qr-img-wrap { width: 220px; height: 220px; margin: 0 auto 1.5rem; background: #fff; padding: 10px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid var(--gold-pale); }
@@ -354,7 +355,6 @@
       <div class="cd-item"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">Giây</span></div>
     </div>
   </div>
-  <div class="scroll-indicator"><div class="scroll-line"></div><span class="scroll-text">Cuộn xuống</span></div>
 </section>
 
 <section id="slogan" class="glow-backdrop">
