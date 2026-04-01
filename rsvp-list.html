@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh Sách Tham Dự | Loan Phượng & Luận Đinh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ivory: #fcf9f2; --parchment: #f4eade;
+      --gold: #c29d59; --gold-bright: #dfb973; --gold-pale: #eadaaf;
+      --charcoal: #2a1f1a; --brown: #8e1b1b; --brown-mid: #a82727;
+      --text-dark: #33261d; --text-mid: #5c4738; --text-light: #8a6a55;
+      --green: #2d7a4f; --green-light: #e8f5ee;
+      --red-soft: #fdf0f0; --red-text: #8e1b1b;
+      --font-script: 'Great Vibes', cursive;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'EB Garamond', Georgia, serif;
+      --font-sans: 'Tenor Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--ivory);
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c29d59' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text-dark); font-family: var(--font-body); font-size: 1rem; line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    .page-header {
+      background: linear-gradient(135deg, var(--charcoal) 0%, #3a2618 100%);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 3px solid var(--gold-bright);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(194,157,89,.18) 0%, transparent 70%);
+    }
+    .page-header-content { position: relative; z-index: 1; }
+    .page-header h1 { font-family: var(--font-script); font-size: clamp(2.2rem, 6vw, 3.5rem); color: var(--gold-pale); margin-bottom: .3rem; }
+    .page-header p { font-family: var(--font-sans); font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+    .page-header-rule { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: .8rem auto; }
+
+    /* ─── STATS CARDS ─── */
+    .stats-wrap {
+      max-width: 860px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem; padding: 2rem 1.5rem 1rem;
+    }
+    .stat-card {
+      background: #fff; border-radius: 12px; padding: 1.4rem 1rem;
+      text-align: center; border: 1px solid rgba(194,157,89,.3);
+      box-shadow: 0 4px 16px rgba(0,0,0,.05);
+    }
+    .stat-num { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--brown); line-height: 1; }
+    .stat-label { font-family: var(--font-sans); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-light); margin-top: .4rem; }
+    .stat-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+
+    /* ─── FILTERS & CONTROLS ─── */
+    .controls-wrap {
+      max-width: 860px; margin: 0 auto; padding: .5rem 1.5rem 1.2rem;
+      display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: .45rem 1.2rem; border-radius: 30px; border: 1.5px solid rgba(194,157,89,.4);
+      font-family: var(--font-sans); font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+      cursor: pointer; background: #fff; color: var(--text-mid); transition: .25s;
+    }
+    .filter-btn.active { background: var(--brown); color: var(--gold-pale); border-color: var(--brown); }
+    .filter-btn:hover:not(.active) { border-color: var(--gold); background: rgba(194,157,89,.08); }
+    .refresh-btn {
+      margin-left: auto; padding: .45rem 1.2rem; border-radius: 30px;
+      border: 1.5px solid rgba(194,157,89,.4); background: #fff;
+      font-family: var(--font-sans); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; color: var(--text-mid); display: flex; align-items: center; gap: .4rem;
+      transition: .25s;
+    }
+    .refresh-btn:hover { border-color: var(--gold); background: rgba(194,157,89,.08); }
+    .refresh-btn svg { width: 14px; height: 14px; }
+
+    /* ─── TABLE / LIST ─── */
+    .list-wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+    .list-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .list-table thead tr { background: linear-gradient(135deg, var(--brown) 0%, var(--brown-mid) 100%); }
+    .list-table thead th {
+      padding: .9rem 1.1rem; text-align: left;
+      font-family: var(--font-sans); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold-pale); font-weight: 400;
+    }
+    .list-table thead th:first-child { border-radius: 10px 0 0 0; }
+    .list-table thead th:last-child { border-radius: 0 10px 0 0; }
+    .list-table tbody tr { background: #fff; transition: background .2s; }
+    .list-table tbody tr:nth-child(even) { background: rgba(252,249,242,.6); }
+    .list-table tbody tr:hover { background: rgba(194,157,89,.07); }
+    .list-table tbody td {
+      padding: .9rem 1.1rem; border-bottom: 1px solid rgba(194,157,89,.15);
+      font-size: .98rem; color: var(--text-dark);
+      vertical-align: middle;
+    }
+    .list-table tbody tr:last-child td { border-bottom: none; }
+    .list-table tbody tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+    .list-table tbody tr:last-child td:last-child { border-radius: 0 0 10px 0; }
+    .table-wrap { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.07); border: 1px solid rgba(194,157,89,.25); }
+    
+    .col-stt { width: 48px; text-align: center; color: var(--text-light); font-size: .88rem; }
+    .col-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; color: var(--brown); }
+    .col-count { text-align: center; font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; color: var(--charcoal); }
+    .col-time { font-size: .85rem; color: var(--text-light); white-space: nowrap; }
+    .col-page { white-space: nowrap; }
+    
+    .badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .2rem .7rem; border-radius: 20px; font-family: var(--font-sans); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .badge-yes { background: var(--green-light); color: var(--green); }
+    .badge-no { background: var(--red-soft); color: var(--red-text); }
+    .badge-page { background: rgba(194,157,89,.15); color: var(--text-mid); }
+
+    /* ─── EMPTY / LOADING ─── */
+    .state-empty, .state-loading {
+      text-align: center; padding: 4rem 2rem; color: var(--text-light);
+      font-style: italic; background: #fff; border-radius: 12px;
+      border: 1px solid rgba(194,157,89,.25); box-shadow: 0 4px 20px rgba(0,0,0,.07);
+    }
+    .state-loading::before { content: '⏳ '; }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 640px) {
+      .col-page, .col-time { display: none; }
+      .stats-wrap { grid-template-columns: repeat(2, 1fr); }
+      .list-table thead th, .list-table tbody td { padding: .7rem .7rem; }
+      .col-name { font-size: 1rem; }
+    }
+
+    /* ─── FOOTER ─── */
+    .page-footer {
+      text-align: center; padding: 2rem; margin-top: 1rem;
+      font-family: var(--font-sans); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--text-light); border-top: 1px solid rgba(194,157,89,.2);
+    }
+    .page-footer a { color: var(--brown); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+    
+    /* Spinner */
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(194,157,89,.3); border-top-color: var(--gold); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; margin-right: .5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="page-header-content">
+    <h1>Danh Sách Tham Dự</h1>
+    <div class="page-header-rule"></div>
+  </div>
+</header>
+
+<!-- Stats -->
+<div class="stats-wrap" id="stats-wrap">
+  <div class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div class="stat-num" id="stat-total-resp">—</div>
+    <div class="stat-label">Phản hồi</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🎉</div>
+    <div class="stat-num" id="stat-attending">—</div>
+    <div class="stat-label">Sẽ tham dự</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🪑</div>
+    <div class="stat-num" id="stat-total-ppl">—</div>
+    <div class="stat-label">Tổng số người</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">😔</div>
+    <div class="stat-num" id="stat-decline">—</div>
+    <div class="stat-label">Không tham dự</div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div class="controls-wrap">
+  <button class="filter-btn active" onclick="setFilter('all', this)">Tất cả</button>
+  <button class="filter-btn" onclick="setFilter('yes', this)">✅ Sẽ tham dự</button>
+  <button class="filter-btn" onclick="setFilter('no', this)">❌ Không tham dự</button>
+  <button class="filter-btn" onclick="setFilter('nhagai', this)">🌸 Nhà Gái</button>
+  <button class="filter-btn" onclick="setFilter('nhatrai', this)">💒 Nhà Trai</button>
+  <button class="refresh-btn" onclick="loadRsvp()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+    Làm mới
+  </button>
+</div>
+
+<!-- List -->
+<div class="list-wrap">
+  <div id="list-container">
+    <div class="state-loading"><span class="spinner"></span>Đang tải dữ liệu...</div>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <p>← Quay về: <a href="nhagai.html">Thiệp Nhà Gái</a> &nbsp;·&nbsp; <a href="nhatrai.html">Thiệp Nhà Trai</a></p>
+  <p style="margin-top:.5rem; opacity:.6;">Chỉ dành cho gia đình cô dâu & chú rể</p>
+</footer>
+
+<script>
+const RSVP_BIN_ID = '69cd554baaba882197b63b42';
+const API_KEY = '$2a$10$658Xiq2wvLfOxPkvLJyX5u1cTr9xfNvmlR/e1DPiB3Q.JFYSnLEMy';
+const RSVP_API_URL = `https://api.jsonbin.io/v3/b/${RSVP_BIN_ID}`;
+
+let allData = [];
+let currentFilter = 'all';
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function loadRsvp() {
+  document.getElementById('list-container').innerHTML = '<div class="state-loading"><span class="spinner"></span>Đang tải dữ liệu...</div>';
+  
+  fetch(`${RSVP_API_URL}/latest`, { headers: { 'X-Master-Key': API_KEY } })
+    .then(r => r.json())
+    .then(data => {
+      allData = (data.record && Array.isArray(data.record)) ? data.record : [];
+      updateStats();
+      renderTable();
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('list-container').innerHTML = '<div class="state-empty">⚠️ Không thể tải dữ liệu. Vui lòng kiểm tra kết nối và thử lại.</div>';
+    });
+}
+
+function updateStats() {
+  const attending = allData.filter(d => d.attending);
+  const decline = allData.filter(d => !d.attending);
+  const totalPpl = attending.reduce((s, d) => s + (d.count || 1), 0);
+  document.getElementById('stat-total-resp').textContent = allData.length;
+  document.getElementById('stat-attending').textContent = attending.length;
+  document.getElementById('stat-total-ppl').textContent = totalPpl;
+  document.getElementById('stat-decline').textContent = decline.length;
+}
+
+function renderTable() {
+  let filtered = allData;
+  if (currentFilter === 'yes') filtered = allData.filter(d => d.attending);
+  else if (currentFilter === 'no') filtered = allData.filter(d => !d.attending);
+  else if (currentFilter === 'nhagai') filtered = allData.filter(d => d.page === 'nhagai');
+  else if (currentFilter === 'nhatrai') filtered = allData.filter(d => d.page === 'nhatrai');
+
+  if (filtered.length === 0) {
+    document.getElementById('list-container').innerHTML = '<div class="state-empty">Chưa có dữ liệu phù hợp với bộ lọc này.</div>';
+    return;
+  }
+
+  const rows = filtered.map((d, i) => `
+    <tr>
+      <td class="col-stt">${i + 1}</td>
+      <td>
+        <span class="col-name">${escHtml(d.name)}</span>
+      </td>
+      <td style="text-align:center;">
+        ${d.attending
+          ? `<span class="badge badge-yes">✅ Tham dự</span>`
+          : `<span class="badge badge-no">❌ Vắng mặt</span>`}
+      </td>
+      <td class="col-count">${d.attending ? (d.count || 1) + ' người' : '—'}</td>
+      <td class="col-page">
+        ${d.page === 'nhagai' ? '<span class="badge badge-page">🌸 Nhà Gái</span>'
+          : d.page === 'nhatrai' ? '<span class="badge badge-page">💒 Nhà Trai</span>'
+          : '<span class="badge badge-page">—</span>'}
+      </td>
+      <td class="col-time">${d.time || '—'}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('list-container').innerHTML = `
+    <div class="table-wrap">
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Họ &amp; Tên</th>
+            <th style="text-align:center;">Trạng thái</th>
+            <th style="text-align:center;">Số người</th>
+            <th>Thiệp</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <p style="text-align:right; margin-top:.8rem; font-family:var(--font-sans); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-light);">
+      Hiển thị ${filtered.length} / ${allData.length} phản hồi
+    </p>
+  `;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Load on init
+loadRsvp();
+// Auto-refresh every 60s
+setInterval(loadRsvp, 60000);
+</script>
+</body>
+</html>

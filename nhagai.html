@@ -300,6 +300,64 @@
       .gift-modal-body { grid-template-columns: 1fr; gap: 2.5rem; padding: 2rem 1.5rem; }
       .qr-img-wrap { width: 180px; height: 180px; }
     }
+    /* ─── RSVP BUTTON ─── */
+    .btn-rsvp-main {
+      display: flex; align-items: center; justify-content: center; gap: .7rem;
+      margin: 0 auto 2.5rem;
+      padding: 1rem 2.8rem;
+      background: linear-gradient(135deg, var(--brown) 0%, var(--brown-mid) 100%);
+      color: var(--gold-pale);
+      border: none; border-radius: 50px;
+      font-family: var(--font-sans); font-size: .75rem; letter-spacing: .25em; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 8px 25px rgba(142,27,27,.3);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .btn-rsvp-main:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(142,27,27,.4); }
+    .btn-rsvp-main svg { width: 18px; height: 18px; }
+
+    /* ─── RSVP MODAL ─── */
+    #rsvp-modal { display: none; position: fixed; inset: 0; z-index: 6000; background: rgba(26,16,8,.88); align-items: center; justify-content: center; padding: 1rem; }
+    #rsvp-modal.active { display: flex; }
+    .rsvp-modal-content {
+      background: var(--ivory); width: 100%; max-width: 480px;
+      border-radius: 16px; overflow: hidden; position: relative;
+      box-shadow: 0 25px 70px rgba(0,0,0,.45); border: 1.5px solid var(--gold-pale);
+      animation: rsvpSlideUp .35s cubic-bezier(.4,0,.2,1) both;
+    }
+    @keyframes rsvpSlideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .rsvp-modal-header {
+      background: linear-gradient(135deg, var(--brown) 0%, var(--brown-mid) 100%);
+      padding: 1.6rem 2rem; text-align: center; position: relative;
+      border-bottom: 2px solid var(--gold-bright);
+    }
+    .rsvp-modal-header h3 { font-family: var(--font-script); font-size: 2rem; color: var(--gold-pale); line-height: 1.2; }
+    .rsvp-modal-header p { font-family: var(--font-sans); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-top: .4rem; }
+    .rsvp-modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: rgba(255,255,255,.7); font-size: 1.4rem; cursor: pointer; transition: color .2s; line-height: 1; }
+    .rsvp-modal-close:hover { color: #fff; }
+    .rsvp-modal-body { padding: 2rem 2rem 1.5rem; }
+    .rsvp-name-row { margin-bottom: 1.4rem; }
+    .rsvp-name-row label { font-family: var(--font-sans); font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--text-mid); display: block; margin-bottom: .5rem; }
+    .rsvp-input { width: 100%; padding: .85rem 1.1rem; border: 1px solid rgba(194,157,89,.5); border-radius: 8px; font-family: var(--font-body); font-size: 1.05rem; color: var(--text-dark); outline: none; transition: border-color .3s; background: rgba(255,255,255,.8); }
+    .rsvp-input:focus { border-color: var(--brown); background: #fff; }
+    .rsvp-options { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.4rem; }
+    .rsvp-option { display: flex; align-items: flex-start; gap: .9rem; padding: 1rem 1.2rem; border: 1.5px solid rgba(194,157,89,.35); border-radius: 10px; cursor: pointer; transition: border-color .3s, background .3s; }
+    .rsvp-option:hover { border-color: var(--gold); background: rgba(194,157,89,.06); }
+    .rsvp-option.selected { border-color: var(--brown); background: rgba(142,27,27,.06); }
+    .rsvp-option input[type="radio"] { display: none; }
+    .rsvp-radio-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--gold); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: border-color .3s; }
+    .rsvp-option.selected .rsvp-radio-dot { border-color: var(--brown); }
+    .rsvp-radio-dot::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--brown); transform: scale(0); transition: transform .2s; }
+    .rsvp-option.selected .rsvp-radio-dot::after { transform: scale(1); }
+    .rsvp-option-text { flex: 1; }
+    .rsvp-option-label { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; }
+    .rsvp-option-sub { font-family: var(--font-body); font-size: .88rem; color: var(--text-light); font-style: italic; }
+    .rsvp-count-row { display: flex; align-items: center; gap: 1rem; margin-top: .9rem; padding: .8rem 1rem; background: rgba(194,157,89,.08); border-radius: 8px; border: 1px dashed rgba(194,157,89,.4); }
+    .rsvp-count-row label { font-family: var(--font-sans); font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-mid); flex: 1; line-height: 1.4; }
+    .rsvp-count-input { width: 70px; padding: .5rem .7rem; border: 1px solid rgba(194,157,89,.5); border-radius: 6px; font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; text-align: center; color: var(--brown); outline: none; background: #fff; }
+    .rsvp-count-input:focus { border-color: var(--brown); }
+    .btn-submit-rsvp { display: block; width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--brown) 0%, var(--brown-mid) 100%); color: var(--gold-pale); border: none; border-radius: 50px; font-family: var(--font-sans); font-size: .75rem; letter-spacing: .25em; text-transform: uppercase; cursor: pointer; transition: opacity .3s, transform .2s; margin-top: 1.5rem; box-shadow: 0 6px 20px rgba(142,27,27,.3); }
+    .btn-submit-rsvp:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(142,27,27,.4); }
+    .btn-submit-rsvp:disabled { opacity: .6; transform: none; cursor: not-allowed; }
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -459,6 +517,14 @@
   <button class="lb-btn" id="lightbox-next">›</button>
 </div>
 
+<!-- RSVP Button -->
+    <div class="reveal" style="text-align:center; margin-bottom: 1rem;">
+      <button class="btn-rsvp-main" onclick="openRsvpModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Xác Nhận Tham Dự
+      </button>
+    </div>
+
 <section id="guestbook">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -466,7 +532,7 @@
       <h2 class="section-title">Sổ Lưu Bút</h2>
       <div class="section-rule"><span></span><i>✦</i><span></span></div>
     </div>
-    
+
     <div class="guestbook-container">
       <div class="gb-form-card glass-card reveal">
         <form id="gb-form">
@@ -730,6 +796,99 @@ gbForm.addEventListener('submit', (e) => {
   });
 });
 
+
+/* =========================================
+   RSVP LOGIC
+   ========================================= */
+// Dùng bin riêng cho RSVP để tách khỏi guestbook
+const RSVP_BIN_ID = '69cd554baaba882197b63b42';
+const RSVP_API_URL = `https://api.jsonbin.io/v3/b/${RSVP_BIN_ID}`;
+
+let rsvpSelection = null;
+
+function openRsvpModal() {
+  const modal = document.getElementById('rsvp-modal');
+  modal.style.display = 'flex';
+  setTimeout(() => modal.classList.add('active'), 10);
+  document.body.style.overflow = 'hidden';
+  const rsvpNameInput = document.getElementById('rsvp-name');
+  if (guestName) rsvpNameInput.value = guestName;
+  else if (!rsvpNameInput.value) rsvpNameInput.value = document.getElementById('opening-guest-name').textContent || '';
+}
+
+function closeRsvpModal() {
+  const modal = document.getElementById('rsvp-modal');
+  modal.classList.remove('active');
+  setTimeout(() => { modal.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+}
+
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('rsvp-modal');
+  if (!modal) return;
+  if (e.target === modal) closeRsvpModal();
+});
+
+function selectRsvp(val) {
+  rsvpSelection = val;
+  const yes = document.getElementById('rsvp-opt-yes');
+  const no = document.getElementById('rsvp-opt-no');
+  if (yes) yes.classList.toggle('selected', val === 'yes');
+  if (no) no.classList.toggle('selected', val === 'no');
+  const countRow = document.getElementById('rsvp-count-row');
+  if (countRow) countRow.style.display = val === 'yes' ? 'flex' : 'none';
+}
+
+function submitRsvp() {
+  const name = document.getElementById('rsvp-name').value.trim();
+  if (!name) { alert('Vui lòng nhập tên của bạn!'); return; }
+  if (!rsvpSelection) { alert('Vui lòng chọn một lựa chọn!'); return; }
+
+  const btn = document.getElementById('btn-submit-rsvp');
+  btn.disabled = true;
+  btn.textContent = 'Đang gửi...';
+
+  const count = rsvpSelection === 'yes' ? parseInt(document.getElementById('rsvp-count').value) || 1 : 0;
+  const newEntry = {
+    name: name,
+    attending: rsvpSelection === 'yes',
+    count: count,
+    time: formatTime(new Date()),
+    page: document.title.includes('Nhà Gái') ? 'nhagai' : 'nhatrai'
+  };
+
+  fetch(`${RSVP_API_URL}/latest`, { headers: { 'X-Master-Key': API_KEY } })
+    .then(r => r.json())
+    .then(data => {
+      const existing = (data.record && Array.isArray(data.record)) ? data.record : [];
+      const updated = [newEntry, ...existing];
+      return fetch(RSVP_API_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+        body: JSON.stringify(updated)
+      });
+    })
+    .then(r => { if (!r.ok) throw new Error('Lỗi mạng'); return r.json(); })
+    .then(() => {
+      closeRsvpModal();
+      const msg = rsvpSelection === 'yes'
+        ? `Cảm ơn ${name}! Chúng tôi rất vui khi được đón tiếp bạn và ${count > 1 ? count + ' người' : 'bạn'}! 🎉`
+        : `Cảm ơn ${name}! Rất tiếc khi bạn không thể tham dự. Chúng tôi gửi lời chúc tốt đẹp nhất đến bạn! 💕`;
+      alert(msg);
+      rsvpSelection = null;
+      const yesEl = document.getElementById('rsvp-opt-yes'); if (yesEl) yesEl.classList.remove('selected');
+      const noEl = document.getElementById('rsvp-opt-no'); if (noEl) noEl.classList.remove('selected');
+      const cr = document.getElementById('rsvp-count-row'); if (cr) cr.style.display = 'none';
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Có lỗi xảy ra. Vui lòng thử lại!');
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = 'Gửi Xác Nhận';
+    });
+}
+
 /* ── FALLING PETALS ── */
 (function() {
   const canvas = document.getElementById('petals-canvas');
@@ -755,5 +914,44 @@ gbForm.addEventListener('submit', (e) => {
   draw();
 })();
 </script>
+<!-- RSVP Modal -->
+<div id="rsvp-modal">
+  <div class="rsvp-modal-content">
+    <div class="rsvp-modal-header">
+      <button class="rsvp-modal-close" onclick="closeRsvpModal()">✕</button>
+      <h3>Xác Nhận Tham Dự</h3>
+    </div>
+    <div class="rsvp-modal-body">
+      <div class="rsvp-name-row">
+        <label>Họ và tên của bạn</label>
+        <input type="text" id="rsvp-name" class="rsvp-input" placeholder="Nhập tên của bạn..." readonly />
+      </div>
+      <div class="rsvp-options">
+        <label class="rsvp-option" id="rsvp-opt-yes" onclick="selectRsvp('yes')">
+          <input type="radio" name="rsvp" value="yes"/>
+          <div class="rsvp-radio-dot"></div>
+          <div class="rsvp-option-text">
+            <div class="rsvp-option-label">Tôi sẽ tham gia</div>
+            <div class="rsvp-option-sub">Rất vui được gặp bạn trong ngày vui!</div>
+            <div class="rsvp-count-row" id="rsvp-count-row" style="display:none;">
+              <label>Số lượng người tham dự<br/><span style="font-style:italic;">(kể cả bạn)</span></label>
+              <input type="number" id="rsvp-count" class="rsvp-count-input" value="1" min="1" max="20"/>
+            </div>
+          </div>
+        </label>
+        <label class="rsvp-option" id="rsvp-opt-no" onclick="selectRsvp('no')">
+          <input type="radio" name="rsvp" value="no"/>
+          <div class="rsvp-radio-dot"></div>
+          <div class="rsvp-option-text">
+            <div class="rsvp-option-label">Rất tiếc, tôi không thể tham dự</div>
+            <div class="rsvp-option-sub">Xin gửi lời chúc mừng tốt đẹp nhất!</div>
+          </div>
+        </label>
+      </div>
+      <button class="btn-submit-rsvp" id="btn-submit-rsvp" onclick="submitRsvp()">Gửi Xác Nhận</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
