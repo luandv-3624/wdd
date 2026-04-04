@@ -125,7 +125,8 @@
 
     /* ─── HERO ─── */
     #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem; }
-    .hero-bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(to bottom, rgba(26,16,8,.5) 0%, rgba(26,16,8,.3) 40%, rgba(26,16,8,.55) 100%), url('./hero.jpg') center/cover no-repeat; transform: scale(1.05); transition: transform 8s ease; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(to bottom, rgba(26,16,8,.5) 0%, rgba(26,16,8,.3) 40%, rgba(26,16,8,.55) 100%), url('./hero.jpg') center/cover no-repeat; background-attachment: fixed; background-position: center bottom; transform: scale(1.05); transition: transform 8s ease; }
+    @media (max-width: 768px) { .hero-bg { background-position: center center; background-attachment: scroll; } }
     #hero:hover .hero-bg { transform: scale(1); }
     .hero-overlay-lines { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.01) 2px, rgba(255,255,255,.01) 4px); }
     .hero-content { position: relative; z-index: 2; max-width: 760px; padding: 0 1rem; }
